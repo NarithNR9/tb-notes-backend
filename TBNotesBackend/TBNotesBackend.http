@@ -1,0 +1,6 @@
+@TBNotesBackend_HostAddress = http://localhost:5093
+
+GET {{TBNotesBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
