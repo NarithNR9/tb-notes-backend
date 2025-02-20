@@ -3,6 +3,17 @@ using TBNotesBackend.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ✅ Add CORS configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowGitHubPages", policy =>
+    {
+        policy.WithOrigins("https://narithnr9.github.io")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -18,6 +29,9 @@ Env.Load();
 builder.Configuration["ConnectionStrings:DefaultConnection"] = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 var app = builder.Build();
+
+// ✅ Use CORS policy before any endpoints
+app.UseCors("AllowGitHubPages");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
